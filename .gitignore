@@ -1,0 +1,11 @@
+node_modules/
+
+# Dados gerados em tempo de execução (a blockchain e o registro são reconstruídos localmente)
+server/data/chain.json
+server/data/voters.json
+server/data/cache/
+
+# Logs e ambiente
+*.log
+.env
+.DS_Store
