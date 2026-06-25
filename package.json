@@ -1,0 +1,30 @@
+{
+  "name": "urna-transparente",
+  "version": "1.0.0",
+  "description": "Plataforma de votação em candidatos do governo do Brasil com backend de blockchain. Cada voto é uma argola imutável e rastreável da corrente.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "blockchain",
+    "voto",
+    "eleicao",
+    "brasil",
+    "tse",
+    "urna",
+    "transparencia"
+  ],
+  "author": "Urna Transparente",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.13.0"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "_nota": "Dados-semente usados como fallback OFFLINE quando a API do TSE está indisponível. Compilados de informações públicas das Eleições Gerais de 2022. A fonte oficial e atualizada é a API de Dados Abertos do TSE (DivulgaCandContas).",
+  "BR_1": [
+    { "id": "BR1-13", "nome": "Luiz Inácio Lula da Silva", "nomeUrna": "Lula", "numero": "13", "partido": "PT", "partidoNome": "Partido dos Trabalhadores", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-22", "nome": "Jair Messias Bolsonaro", "nomeUrna": "Jair Bolsonaro", "numero": "22", "partido": "PL", "partidoNome": "Partido Liberal", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-12", "nome": "Ciro Ferreira Gomes", "nomeUrna": "Ciro Gomes", "numero": "12", "partido": "PDT", "partidoNome": "Partido Democrático Trabalhista", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-15", "nome": "Simone Nassar Tebet", "nomeUrna": "Simone Tebet", "numero": "15", "partido": "MDB", "partidoNome": "Movimento Democrático Brasileiro", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-44", "nome": "Soraya Vieira Thronicke", "nomeUrna": "Soraya Thronicke", "numero": "44", "partido": "UNIÃO", "partidoNome": "União Brasil", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-30", "nome": "Luiz Felipe Chaves d'Ávila", "nomeUrna": "Felipe d'Ávila", "numero": "30", "partido": "NOVO", "partidoNome": "Partido Novo", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-14", "nome": "Padre Kelmon Luís da Silva Souza", "nomeUrna": "Padre Kelmon", "numero": "14", "partido": "PTB", "partidoNome": "Partido Trabalhista Brasileiro", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-27", "nome": "José Maria Eymael", "nomeUrna": "Eymael", "numero": "27", "partido": "DC", "partidoNome": "Democracia Cristã", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-80", "nome": "Leonardo Péricles Vieira Roque", "nomeUrna": "Léo Péricles", "numero": "80", "partido": "UP", "partidoNome": "Unidade Popular", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-21", "nome": "Sofia Padua Manzano", "nomeUrna": "Sofia Manzano", "numero": "21", "partido": "PCB", "partidoNome": "Partido Comunista Brasileiro", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" },
+    { "id": "BR1-16", "nome": "Vera Lúcia Pereira da Silva Salgado", "nomeUrna": "Vera", "numero": "16", "partido": "PSTU", "partidoNome": "Partido Socialista dos Trabalhadores Unificado", "cargo": "1", "cargoNome": "Presidente", "uf": "BR", "foto": null, "situacao": "Deferido" }
+  ],
+  "SP_3": [
+    { "id": "SP3-10", "nome": "Tarcísio Gomes de Freitas", "nomeUrna": "Tarcísio de Freitas", "numero": "10", "partido": "REPUBLICANOS", "partidoNome": "Republicanos", "cargo": "3", "cargoNome": "Governador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP3-13", "nome": "Fernando Haddad", "nomeUrna": "Fernando Haddad", "numero": "13", "partido": "PT", "partidoNome": "Partido dos Trabalhadores", "cargo": "3", "cargoNome": "Governador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP3-45", "nome": "Rodrigo Garcia", "nomeUrna": "Rodrigo Garcia", "numero": "45", "partido": "PSDB", "partidoNome": "Partido da Social Democracia Brasileira", "cargo": "3", "cargoNome": "Governador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP3-40", "nome": "Márcio Luiz França Gomes", "nomeUrna": "Márcio França", "numero": "40", "partido": "PSB", "partidoNome": "Partido Socialista Brasileiro", "cargo": "3", "cargoNome": "Governador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP3-30", "nome": "Vinicius Poit", "nomeUrna": "Vinicius Poit", "numero": "30", "partido": "NOVO", "partidoNome": "Partido Novo", "cargo": "3", "cargoNome": "Governador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP3-12", "nome": "Elvis Cezar", "nomeUrna": "Elvis Cezar", "numero": "12", "partido": "PDT", "partidoNome": "Partido Democrático Trabalhista", "cargo": "3", "cargoNome": "Governador", "uf": "SP", "foto": null, "situacao": "Deferido" }
+  ],
+  "SP_5": [
+    { "id": "SP5-110", "nome": "Marcos Cesar Pontes", "nomeUrna": "Marcos Pontes", "numero": "110", "partido": "PL", "partidoNome": "Partido Liberal", "cargo": "5", "cargoNome": "Senador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP5-280", "nome": "Janaina Conceição Paschoal", "nomeUrna": "Janaina Paschoal", "numero": "280", "partido": "PRTB", "partidoNome": "Partido Renovador Trabalhista Brasileiro", "cargo": "5", "cargoNome": "Senador", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP5-150", "nome": "Edson Aparecido dos Santos", "nomeUrna": "Edson Aparecido", "numero": "150", "partido": "MDB", "partidoNome": "Movimento Democrático Brasileiro", "cargo": "5", "cargoNome": "Senador", "uf": "SP", "foto": null, "situacao": "Deferido" }
+  ],
+  "SP_6": [
+    { "id": "SP6-5000", "nome": "Guilherme Castro Boulos", "nomeUrna": "Guilherme Boulos", "numero": "5000", "partido": "PSOL", "partidoNome": "Partido Socialismo e Liberdade", "cargo": "6", "cargoNome": "Deputado Federal", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP6-2210", "nome": "Eduardo Nantes Bolsonaro", "nomeUrna": "Eduardo Bolsonaro", "numero": "2210", "partido": "PL", "partidoNome": "Partido Liberal", "cargo": "6", "cargoNome": "Deputado Federal", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP6-4040", "nome": "Tábata Claudia Amaral de Pontes", "nomeUrna": "Tabata Amaral", "numero": "4040", "partido": "PSB", "partidoNome": "Partido Socialista Brasileiro", "cargo": "6", "cargoNome": "Deputado Federal", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP6-1010", "nome": "Kim Patroca Kataguiri", "nomeUrna": "Kim Kataguiri", "numero": "1010", "partido": "UNIÃO", "partidoNome": "União Brasil", "cargo": "6", "cargoNome": "Deputado Federal", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP6-6555", "nome": "Orlando Silva de Jesus Júnior", "nomeUrna": "Orlando Silva", "numero": "6555", "partido": "PCdoB", "partidoNome": "Partido Comunista do Brasil", "cargo": "6", "cargoNome": "Deputado Federal", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP6-2222", "nome": "Francisco Everardo Oliveira Silva", "nomeUrna": "Tiririca", "numero": "2222", "partido": "PL", "partidoNome": "Partido Liberal", "cargo": "6", "cargoNome": "Deputado Federal", "uf": "SP", "foto": null, "situacao": "Deferido" }
+  ],
+  "SP_7": [
+    { "id": "SP7-13013", "nome": "Eduardo Matarazzo Suplicy", "nomeUrna": "Eduardo Suplicy", "numero": "13013", "partido": "PT", "partidoNome": "Partido dos Trabalhadores", "cargo": "7", "cargoNome": "Deputado Estadual", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP7-22200", "nome": "Gil Diniz Ferreira de Lima", "nomeUrna": "Gil Diniz", "numero": "22200", "partido": "PL", "partidoNome": "Partido Liberal", "cargo": "7", "cargoNome": "Deputado Estadual", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP7-18000", "nome": "Marina Helou Cunha Bueno", "nomeUrna": "Marina Helou", "numero": "18000", "partido": "REDE", "partidoNome": "Rede Sustentabilidade", "cargo": "7", "cargoNome": "Deputado Estadual", "uf": "SP", "foto": null, "situacao": "Deferido" },
+    { "id": "SP7-50500", "nome": "Paula Nunes do Nascimento", "nomeUrna": "Paula Nunes", "numero": "50500", "partido": "PSOL", "partidoNome": "Partido Socialismo e Liberdade", "cargo": "7", "cargoNome": "Deputado Estadual", "uf": "SP", "foto": null, "situacao": "Deferido" }
+  ]
+}
