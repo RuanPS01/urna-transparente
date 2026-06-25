@@ -2,6 +2,7 @@
 import { api } from './api.js';
 import { createWallet, getWallet, clearWallet } from './wallet.js';
 import { openModal, toast, escapeHtml } from './ui.js';
+import { icons } from './icons.js';
 
 function randomTitulo() {
   let s = '';
@@ -22,9 +23,9 @@ export function openIdentityModal() {
     const close = openModal((dismiss) => {
       const box = document.createElement('div');
       box.innerHTML = `
-        <h3>🪪 Criar identidade de eleitor</h3>
+        <h3 class="modal-title">${icons.idCard} Criar identidade de eleitor</h3>
         <p>Geramos um par de chaves criptográficas no seu navegador. A chave
-        privada fica só com você e assina seus votos — como uma carteira de criptomoeda.</p>
+        privada fica só com você e assina seus votos - como uma carteira de criptomoeda.</p>
         <div class="field">
           <label for="titulo">Título de eleitor (simulado)</label>
           <input id="titulo" inputmode="numeric" maxlength="14" value="${randomTitulo()}" />
@@ -39,7 +40,7 @@ export function openIdentityModal() {
       box.querySelector('[data-act="create"]').onclick = async () => {
         const titulo = box.querySelector('#titulo').value.trim() || randomTitulo();
         const btn = box.querySelector('[data-act="create"]');
-        btn.disabled = true; btn.textContent = 'Gerando…';
+        btn.disabled = true; btn.textContent = 'Gerando...';
         try {
           const wallet = await createWallet(titulo);
           await api.registerVoter(titulo, wallet.publicKey);
@@ -66,7 +67,7 @@ function showSuccess(wallet) {
   openModal((dismiss) => {
     const box = document.createElement('div');
     box.innerHTML = `
-      <h3>✅ Identidade pronta</h3>
+      <h3 class="modal-title"><span style="color:var(--ok)">${icons.circleCheck}</span> Identidade pronta</h3>
       <p>Seu endereço de eleitor (derivado da chave pública):</p>
       <div class="key-box"><strong style="color:var(--amarelo)">${escapeHtml(wallet.address)}</strong></div>
       <p style="font-size:.82rem">Sua chave privada está salva apenas neste navegador. Já pode votar na rodada atual.</p>

@@ -3,6 +3,7 @@ import { getWallet, clearWallet } from './wallet.js';
 import { openIdentityModal } from './identity.js';
 import { escapeHtml, toast } from './ui.js';
 import { getMode } from './api.js';
+import { icons } from './icons.js';
 
 import * as home from './views/home.js';
 import * as votar from './views/votar.js';
@@ -28,7 +29,7 @@ async function route() {
   const view = routes[path] || home;
   setActiveNav(path in routes ? path : '');
   const app = document.getElementById('app');
-  app.innerHTML = '<div class="loading">Carregando…</div>';
+  app.innerHTML = '<div class="loading">Carregando...</div>';
   try {
     await view.render(app);
   } catch (e) {
@@ -47,7 +48,7 @@ function renderWalletBadge() {
       <span class="wallet-chip" title="Identidade do eleitor">
         <span class="dot"></span>
         <code>${escapeHtml(w.address)}</code>
-        <button data-act="logout" title="Encerrar identidade">⏻</button>
+        <button data-act="logout" title="Encerrar identidade" aria-label="Encerrar identidade">${icons.power}</button>
       </span>`;
     el.querySelector('[data-act="logout"]').onclick = () => {
       clearWallet();
@@ -75,7 +76,7 @@ async function showModeBanner() {
     if ((await getMode()) !== 'static') return;
     const el = document.getElementById('mode-banner');
     el.hidden = false;
-    el.innerHTML = '🔗 <strong>Modo demonstração</strong> — sem servidor: a blockchain roda localmente no seu navegador (os votos ficam neste dispositivo).';
+    el.innerHTML = `${icons.link} <strong>Modo demonstração</strong> - sem servidor: a blockchain roda localmente no seu navegador (os votos ficam neste dispositivo).`;
   } catch { /* ignora */ }
 }
 

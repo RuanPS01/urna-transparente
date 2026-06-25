@@ -1,4 +1,4 @@
-// "Backend local" — usado quando NÃO há servidor Node (ex.: GitHub Pages).
+// "Backend local" - usado quando NÃO há servidor Node (ex.: GitHub Pages).
 // Reimplementa a mesma blockchain do servidor, mas 100% no navegador:
 // mineração e validação com Web Crypto (SHA-256), assinatura ECDSA P-256 e
 // persistência em localStorage. A interface espelha a do servidor para que
