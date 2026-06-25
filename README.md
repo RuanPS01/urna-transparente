@@ -47,7 +47,7 @@ Destaque para a corrida **presidencial**, com apoio a outros cargos (Governador,
 
 ## 🚀 Começando
 
-Requisitos: **Node.js 18+**.
+Requisitos: **Node.js 24+**.
 
 ```bash
 npm install
@@ -152,7 +152,7 @@ Passo a passo no Render:
    - **Health Check Path:** `/api/health`
 3. Em **Environment**, adicione a variável:
    - `DATABASE_URL` = sua string do Neon (inclua `?sslmode=require`)
-   - (opcional) `NODE_VERSION=20`, `CHAIN_DIFFICULTY=3`
+   - (opcional) `NODE_VERSION=24`, `CHAIN_DIFFICULTY=3`
 4. Deploy. O Render injeta `PORT` automaticamente (o servidor já o utiliza).
 
 > Rode **uma única instância** (sem autoscaling horizontal): a mineração é

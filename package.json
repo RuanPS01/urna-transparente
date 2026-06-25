@@ -21,7 +21,7 @@
   "author": "Urna Transparente",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "dependencies": {
     "express": "^4.19.2",
