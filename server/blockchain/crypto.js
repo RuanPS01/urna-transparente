@@ -5,6 +5,11 @@ export function sha256hex(input) {
   return crypto.createHash('sha256').update(input).digest('hex');
 }
 
+/** Endereço curto do eleitor (como um wallet), derivado da chave pública. */
+export function addressOf(publicKeyB64) {
+  return sha256hex(publicKeyB64).slice(0, 16);
+}
+
 /**
  * Nullifier determinístico que identifica unicamente um eleitor numa
  * combinação rodada+cargo SEM revelar sua identidade. Como deriva da

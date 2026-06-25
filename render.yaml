@@ -1,0 +1,20 @@
+# Blueprint do Render (Infrastructure as Code).
+# No Render: New + → "Blueprint" → conecte este repositório.
+# Depois preencha a variável DATABASE_URL (string de conexão do Neon).
+services:
+  - type: web
+    name: urna-transparente
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DATABASE_URL
+        sync: false        # cole a URL do Neon no painel (não fica no repo)
+      - key: CHAIN_DIFFICULTY
+        value: "3"
+      - key: TSE_ENABLED
+        value: "true"

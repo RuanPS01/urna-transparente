@@ -2,17 +2,16 @@ import express from 'express';
 import { config } from './config.js';
 import { getCandidates } from './services/candidates.js';
 import { currentRound, describeRound, roundLabel } from './services/rounds.js';
-import { register, isRegistered, addressOf, voterCount } from './services/voters.js';
-import { computeNullifier } from './blockchain/crypto.js';
+import { computeNullifier, addressOf } from './blockchain/crypto.js';
 
 /**
- * Monta o roteador da API REST. Recebe a instância da blockchain e a
- * função de persistência por injeção de dependência.
+ * Monta o roteador da API REST. Recebe a blockchain (em memória) e a camada
+ * de armazenamento (arquivo ou Postgres) por injeção de dependência.
  */
-export function createApi({ chain, save }) {
+export function createApi({ chain, storage }) {
   const r = express.Router();
 
-  r.get('/health', (_req, res) => res.json({ ok: true, time: Date.now() }));
+  r.get('/health', (_req, res) => res.json({ ok: true, time: Date.now(), storage: storage.kind }));
 
   // --- Metadados -----------------------------------------------------------
   r.get('/cargos', (_req, res) => res.json({ cargos: config.cargos }));
@@ -25,16 +24,20 @@ export function createApi({ chain, save }) {
     res.json({ current: cur, rounds });
   });
 
-  r.get('/stats', (_req, res) => {
-    const v = chain.validate();
-    res.json({
-      blocos: chain.chain.length,
-      votos: chain.voteCount,
-      eleitores: voterCount(),
-      dificuldade: chain.difficulty,
-      integro: v.valid,
-      rodadaAtual: currentRound(),
-    });
+  r.get('/stats', async (_req, res) => {
+    try {
+      const v = chain.validate();
+      res.json({
+        blocos: chain.chain.length,
+        votos: chain.voteCount,
+        eleitores: await storage.voterCount(),
+        dificuldade: chain.difficulty,
+        integro: v.valid,
+        rodadaAtual: currentRound(),
+      });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
   });
 
   // --- Candidatos ----------------------------------------------------------
@@ -51,10 +54,10 @@ export function createApi({ chain, save }) {
   });
 
   // --- Identidade do eleitor ----------------------------------------------
-  r.post('/voters/register', (req, res) => {
+  r.post('/voters/register', async (req, res) => {
     try {
       const { titulo, publicKey } = req.body || {};
-      res.json(register({ titulo, publicKey }));
+      res.json(await storage.registerVoter(titulo, publicKey));
     } catch (e) {
       res.status(e.status || 500).json({ error: e.message });
     }
@@ -70,20 +73,20 @@ export function createApi({ chain, save }) {
   });
 
   // --- Voto ----------------------------------------------------------------
-  r.post('/votes', (req, res) => {
+  r.post('/votes', async (req, res) => {
     try {
       const v = req.body || {};
-      const req_fields = ['roundId', 'cargo', 'candidateId', 'voterPublicKey', 'signature', 'nullifier'];
-      for (const k of req_fields) {
+      for (const k of ['roundId', 'cargo', 'candidateId', 'voterPublicKey', 'signature', 'nullifier']) {
         if (!v[k]) return res.status(400).json({ error: `Campo obrigatório ausente: ${k}` });
       }
       if (v.roundId !== currentRound().id) {
         return res.status(400).json({ error: 'A rodada informada não está aberta para votação.' });
       }
-      if (!isRegistered(v.voterPublicKey)) {
+      if (!(await storage.isRegistered(v.voterPublicKey))) {
         return res.status(403).json({ error: 'Eleitor não registrado. Crie sua identidade antes de votar.' });
       }
 
+      // Minera o bloco em memória...
       const block = chain.addVote({
         roundId: v.roundId,
         cargo: String(v.cargo),
@@ -96,7 +99,15 @@ export function createApi({ chain, save }) {
         nullifier: v.nullifier,
         signature: v.signature,
       });
-      save();
+
+      // ...e só confirma se a persistência aceitar (desfaz em caso de falha).
+      try {
+        await storage.appendBlock(block);
+      } catch (e) {
+        chain.chain.pop();
+        chain.nullifiers.delete(block.vote.nullifier);
+        throw e;
+      }
 
       res.status(201).json({
         ok: true,

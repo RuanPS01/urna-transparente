@@ -74,6 +74,8 @@ npm test
 | `TSE_ENABLED` | `true` | Liga/desliga a busca na API do TSE |
 | `TSE_YEAR` | `2022` | Ano da eleição consultada |
 | `TSE_ELECTION` | `544` | Código da eleição no TSE |
+| `DATABASE_URL` | _(vazio)_ | Conexão Postgres (Neon). Se definida, ativa a contagem global durável; senão, usa arquivo |
+| `DATA_DIR` | `server/data` | Diretório gravável (ex.: volume) usado no modo arquivo |
 
 > Em ambientes sem acesso à internet (ou quando a API do TSE está fora do ar), a plataforma usa automaticamente os dados-semente em `server/data/candidates.seed.json`.
 
@@ -125,6 +127,35 @@ urna-transparente/
 
 O workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda `npm ci` e
 `npm test` a cada push e pull request, garantindo que a blockchain continua íntegra.
+
+## 🚀 Implantação no Render + Neon (contagem global)
+
+Topologia recomendada: o **Express serve o front-end e a API na mesma origem**,
+e a corrente é persistida no **Postgres (Neon)** — assim a contagem é única,
+global e sobrevive a redeploys.
+
+**Persistência:** com `DATABASE_URL` definida, a app cria as tabelas `blocks`
+e `voters` automaticamente e passa a gravar cada voto como um bloco. A coluna
+do voto é `TEXT` (preserva a serialização exata que define o hash) e há uma
+constraint `UNIQUE` no *nullifier* — o próprio banco barra voto duplo.
+
+Passo a passo no Render:
+
+1. **New + → Web Service** e conecte o repositório `urna-transparente`
+   (ou use o `render.yaml` via **New + → Blueprint**).
+2. Configure:
+   - **Runtime:** Node
+   - **Build Command:** `npm ci`
+   - **Start Command:** `npm start`
+   - **Health Check Path:** `/api/health`
+3. Em **Environment**, adicione a variável:
+   - `DATABASE_URL` = sua string do Neon (inclua `?sslmode=require`)
+   - (opcional) `NODE_VERSION=20`, `CHAIN_DIFFICULTY=3`
+4. Deploy. O Render injeta `PORT` automaticamente (o servidor já o utiliza).
+
+> Rode **uma única instância** (sem autoscaling horizontal): a mineração é
+> sequencial e a corrente vive em memória + Postgres. Para múltiplas instâncias
+> seria preciso um coordenador de escrita — fora do escopo desta demo.
 
 ## 🌐 Implantação no GitHub Pages
 

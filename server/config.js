@@ -3,6 +3,10 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Diretório de dados gravável. Em produção (ex.: Render) pode apontar para
+// um volume persistente via DATA_DIR. O seed continua versionado no repo.
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+
 /**
  * Configuração central da Urna Transparente.
  * Valores podem ser sobrescritos por variáveis de ambiente.
@@ -14,11 +18,14 @@ export const config = {
   // 3 mantém a mineração rápida (poucos ms) e ainda demonstra o conceito.
   difficulty: Number(process.env.CHAIN_DIFFICULTY || 3),
 
+  // Banco de dados (Postgres/Neon). Quando ausente, usa persistência em arquivo.
+  databaseUrl: process.env.DATABASE_URL || null,
+
   // Arquivos e diretórios de dados
-  dataDir: path.join(__dirname, 'data'),
-  chainFile: path.join(__dirname, 'data', 'chain.json'),
-  votersFile: path.join(__dirname, 'data', 'voters.json'),
-  cacheDir: path.join(__dirname, 'data', 'cache'),
+  dataDir: DATA_DIR,
+  chainFile: path.join(DATA_DIR, 'chain.json'),
+  votersFile: path.join(DATA_DIR, 'voters.json'),
+  cacheDir: path.join(DATA_DIR, 'cache'),
   seedFile: path.join(__dirname, 'data', 'candidates.seed.json'),
 
   // Integração com a API de Dados Abertos do TSE (DivulgaCandContas)
