@@ -1,6 +1,8 @@
 # 🗳️ Urna Transparente
 
 > Plataforma web de votação em candidatos do governo do Brasil onde **cada voto é uma argola imutável e rastreável de uma blockchain** — como uma criptomoeda, mas para a democracia.
+* Link de acesso à plataforma global: https://urna-transparente.onrender.com/
+* Link de acesso à plataforma de funcionamento local em browser: http://ruanps.com.br/urna-transparente/
 
 Destaque para a corrida **presidencial**, com apoio a outros cargos (Governador, Senador, Deputado Federal e Estadual). Os candidatos vêm da **API de Dados Abertos do TSE**, e a cada mês começa uma **nova rodada de votação**.
 
