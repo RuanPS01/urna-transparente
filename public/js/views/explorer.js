@@ -1,5 +1,6 @@
 import { api } from '../api.js';
 import { fmtHash, fmtDateTime, escapeHtml, avatar, toast, fmtNum } from '../ui.js';
+import { icons } from '../icons.js';
 
 const LIMIT = 25;
 const state = { offset: 0, total: 0, rootRef: null };
@@ -27,7 +28,7 @@ async function renderStatus() {
   state.total = stats.blocos;
   el.innerHTML = `
     <div class="chain-status ${v.valid ? 'ok' : 'bad'}">
-      <span class="ic">${v.valid ? '🔒' : '⚠️'}</span>
+      <span class="ic" style="color:${v.valid ? 'var(--ok)' : 'var(--erro)'}">${v.valid ? icons.lock : icons.alert}</span>
       <div style="flex:1">
         <strong>${v.valid ? 'Corrente íntegra' : 'Corrente comprometida!'}</strong><br>
         <span style="color:var(--txt-suave);font-size:.9rem">
@@ -36,7 +37,7 @@ async function renderStatus() {
             : `Falha no bloco #${v.index}: ${escapeHtml(v.reason)}`}
         </span>
       </div>
-      <button class="btn btn-ghost" id="revalidate">↻ Revalidar</button>
+      <button class="btn btn-ghost" id="revalidate">${icons.refresh} Revalidar</button>
     </div>`;
   el.querySelector('#revalidate').onclick = async () => {
     await renderStatus();
@@ -48,7 +49,12 @@ async function loadMore() {
   const wrap = state.rootRef.querySelector('#blocks');
   const data = await api.chain(LIMIT, state.offset);
   state.total = data.length;
-  wrap.insertAdjacentHTML('beforeend', data.blocks.map(blockHtml).join(''));
+  const startEmpty = wrap.children.length === 0;
+  const html = data.blocks.map((b, i) => {
+    const connector = (startEmpty && i === 0) ? '' : `<div class="chain-link" aria-hidden="true">${icons.link}</div>`;
+    return connector + blockHtml(b);
+  }).join('');
+  wrap.insertAdjacentHTML('beforeend', html);
   state.offset += data.blocks.length;
   const moreBtn = state.rootRef.querySelector('#more');
   moreBtn.style.display = state.offset >= data.length ? 'none' : '';
@@ -63,7 +69,7 @@ function blockHtml(b) {
       <div class="vote-line">
         ${avatar(v.candidateNome, v.candidatePartido, '')}
         <strong>${escapeHtml(v.candidateNome || 'Candidato')}</strong>
-        <span class="numero">${escapeHtml(v.candidateNumero || '—')}</span>
+        <span class="numero">${escapeHtml(v.candidateNumero || '-')}</span>
         <span class="tag-party">${escapeHtml(v.candidatePartido || '')}</span>
         <span style="color:var(--txt-suave);font-size:.85rem">• cargo ${escapeHtml(v.cargo)} • rodada ${escapeHtml(v.roundId)}</span>
       </div>

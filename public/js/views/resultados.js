@@ -1,6 +1,7 @@
 import { api } from '../api.js';
 import { escapeHtml, fmtNum } from '../ui.js';
 import { barsHtml } from './charts.js';
+import { icons } from '../icons.js';
 
 const state = { round: null, cargo: '1', cargos: [], rounds: [], rootRef: null };
 
@@ -13,13 +14,13 @@ export async function render(root) {
 
   root.innerHTML = `
     <h1 class="section-title">Resultados</h1>
-    <p class="section-sub">Apuração contada diretamente da blockchain — qualquer um pode reconferir.</p>
+    <p class="section-sub">Apuração contada diretamente da blockchain - qualquer um pode reconferir.</p>
     <div class="round-select">
       <label for="round-sel">Rodada:</label>
       <select id="round-sel">
         ${state.rounds.map((r) => `<option value="${r.id}" ${r.id === state.round ? 'selected' : ''}>${escapeHtml(r.label)}${r.status === 'aberta' ? ' • aberta' : ''}</option>`).join('')}
       </select>
-      <button class="btn btn-ghost" id="refresh">↻ Atualizar</button>
+      <button class="btn btn-ghost" id="refresh">${icons.refresh} Atualizar</button>
     </div>
     <div class="cargo-tabs" id="cargo-tabs"></div>
     <div class="panel" id="res-area"></div>`;
@@ -54,11 +55,11 @@ function renderTabs() {
 
 async function renderResults() {
   const area = state.rootRef.querySelector('#res-area');
-  area.innerHTML = '<div class="loading">Apurando…</div>';
+  area.innerHTML = '<div class="loading">Apurando...</div>';
   const data = await api.results(state.round, state.cargo);
   const cargoDef = state.cargos.find((c) => c.code === state.cargo);
   area.innerHTML = `
-    <h2>${escapeHtml(cargoDef?.nome || 'Cargo')} — ${escapeHtml(data.label)}</h2>
+    <h2>${escapeHtml(cargoDef?.nome || 'Cargo')} - ${escapeHtml(data.label)}</h2>
     <p class="section-sub">${fmtNum(data.total)} ${data.total === 1 ? 'voto apurado' : 'votos apurados'}</p>
     ${barsHtml(data.results)}`;
 }

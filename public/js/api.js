@@ -1,9 +1,9 @@
 // Cliente de dados da Urna Transparente.
 //
 // Funciona em dois modos, detectados automaticamente:
-//  • "server"  → há um backend Node respondendo em /api (ex.: `npm start`).
-//  • "static"  → não há backend (ex.: GitHub Pages): a blockchain roda no
-//                 próprio navegador via ./local-backend.js.
+//  - "server": há um backend Node respondendo em /api (ex.: `npm start`).
+//  - "static": não há backend (ex.: GitHub Pages): a blockchain roda no
+//              próprio navegador via ./local-backend.js.
 const BASE = '/api';
 
 let _mode = null;
@@ -14,7 +14,7 @@ async function detectMode() {
   try {
     const res = await fetch(`${BASE}/health`, { signal: AbortSignal.timeout(2500) });
     if (res.ok) { _mode = 'server'; return _mode; }
-  } catch { /* sem servidor → estático */ }
+  } catch { /* sem servidor -> estático */ }
   _mode = 'static';
   _local = await import('./local-backend.js');
   await _local.init();

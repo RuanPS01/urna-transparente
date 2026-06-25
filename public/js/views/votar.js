@@ -2,6 +2,7 @@ import { api } from '../api.js';
 import { ensureIdentity } from '../identity.js';
 import { getWallet, computeNullifier, signPayload } from '../wallet.js';
 import { avatar, escapeHtml, toast, openModal, fmtHash } from '../ui.js';
+import { icons } from '../icons.js';
 
 const VOTED_LS = 'urna_voted';
 const votedSet = () => {
@@ -22,7 +23,7 @@ export async function render(root) {
   state.round = roundsRes.current;
 
   root.innerHTML = `
-    <h1 class="section-title">Votar — ${escapeHtml(state.round.label)}</h1>
+    <h1 class="section-title">Votar - ${escapeHtml(state.round.label)}</h1>
     <p class="section-sub">Rodada <strong style="color:var(--ok)">aberta</strong>. Escolha o cargo e registre seu voto na corrente.</p>
     <div class="cargo-tabs" id="cargo-tabs"></div>
     <div id="cand-area"></div>`;
@@ -50,14 +51,14 @@ function renderTabs() {
 
 async function renderCandidates() {
   const area = state.rootRef.querySelector('#cand-area');
-  area.innerHTML = '<div class="loading">Buscando candidatos…</div>';
+  area.innerHTML = '<div class="loading">Buscando candidatos...</div>';
   const cargoDef = state.cargos.find((c) => c.code === state.cargo);
   const data = await api.candidates(state.cargo, cargoDef?.uf);
 
   const already = votedSet().has(votedKey(state.round.id, state.cargo));
   const banner = already
-    ? `<div class="callout" style="margin-bottom:16px">✅ Você já votou para <strong>${escapeHtml(cargoDef?.nome)}</strong> nesta rodada.
-        <a href="#/resultados" style="color:var(--amarelo);font-weight:700">Ver resultados →</a></div>`
+    ? `<div class="callout" style="margin-bottom:16px"><span style="color:var(--ok)">${icons.circleCheck}</span> Você já votou para <strong>${escapeHtml(cargoDef?.nome)}</strong> nesta rodada.
+        <a href="#/resultados" style="color:var(--amarelo);font-weight:700">Ver resultados ${icons.arrowRight}</a></div>`
     : '';
 
   if (!data.candidatos.length) {
@@ -71,7 +72,7 @@ async function renderCandidates() {
         ${avatar(c.nomeUrna || c.nome, c.partido)}
         <div>
           <div class="cand-name">${escapeHtml(c.nomeUrna || c.nome)}</div>
-          <div class="cand-meta"><span class="numero">${escapeHtml(c.numero || '—')}</span><span class="tag-party">${escapeHtml(c.partido)}</span></div>
+          <div class="cand-meta"><span class="numero">${escapeHtml(c.numero || '-')}</span><span class="tag-party">${escapeHtml(c.partido)}</span></div>
         </div>
       </div>
       <div class="cand-meta" style="font-size:.8rem">${escapeHtml(c.partidoNome || c.cargoNome || '')}</div>
@@ -143,7 +144,7 @@ function confirmVote(cand, onConfirm) {
       <div class="cand-top" style="background:var(--bg-2);padding:14px;border-radius:12px;margin-bottom:16px">
         ${avatar(cand.nomeUrna || cand.nome, cand.partido)}
         <div><div class="cand-name">${escapeHtml(cand.nomeUrna || cand.nome)}</div>
-        <div class="cand-meta"><span class="numero">${escapeHtml(cand.numero || '—')}</span><span class="tag-party">${escapeHtml(cand.partido)}</span></div></div>
+        <div class="cand-meta"><span class="numero">${escapeHtml(cand.numero || '-')}</span><span class="tag-party">${escapeHtml(cand.partido)}</span></div></div>
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" data-act="cancel">Cancelar</button>
@@ -152,7 +153,7 @@ function confirmVote(cand, onConfirm) {
     box.querySelector('[data-act="cancel"]').onclick = dismiss;
     box.querySelector('[data-act="ok"]').onclick = async () => {
       box.querySelector('[data-act="ok"]').disabled = true;
-      box.querySelector('[data-act="ok"]').textContent = 'Minerando…';
+      box.querySelector('[data-act="ok"]').textContent = 'Minerando...';
       dismiss();
       await onConfirm();
     };
@@ -164,7 +165,7 @@ function showReceipt(cand, block) {
   openModal((dismiss) => {
     const box = document.createElement('div');
     box.innerHTML = `
-      <h3>🧾 Comprovante de voto</h3>
+      <h3 class="modal-title">${icons.receipt} Comprovante de voto</h3>
       <p>Seu voto em <strong>${escapeHtml(cand.nomeUrna || cand.nome)}</strong> virou a argola <strong>#${block.index}</strong> da corrente.</p>
       <div class="key-box">
         <div><span style="color:var(--txt-fraco)">Hash do bloco:</span><br><code style="color:var(--amarelo)">${escapeHtml(block.hash)}</code></div>

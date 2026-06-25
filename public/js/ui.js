@@ -34,7 +34,7 @@ export function avatar(nome, sigla, cls = '') {
 
 export function fmtHash(hash, head = 10, tail = 6) {
   if (!hash) return '';
-  return hash.length <= head + tail ? hash : `${hash.slice(0, head)}…${hash.slice(-tail)}`;
+  return hash.length <= head + tail ? hash : `${hash.slice(0, head)}...${hash.slice(-tail)}`;
 }
 
 export function fmtDateTime(ts) {

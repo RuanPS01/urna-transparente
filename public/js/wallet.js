@@ -1,5 +1,5 @@
 // Carteira do eleitor: par de chaves ECDSA P-256 gerado e guardado no
-// navegador (localStorage). A chave privada NUNCA sai do dispositivo —
+// navegador (localStorage). A chave privada NUNCA sai do dispositivo -
 // ela apenas assina o voto localmente, como numa carteira de criptomoeda.
 
 const LS_KEY = 'urna_wallet_v1';
@@ -60,7 +60,7 @@ export async function createWallet(titulo) {
 }
 
 // Assina um texto e devolve a assinatura em base64 (formato bruto r||s,
-// IEEE P-1363 — o mesmo que o servidor Node verifica).
+// IEEE P-1363 - o mesmo que o servidor Node verifica).
 export async function signPayload(privateKeyB64, payload) {
   const key = await crypto.subtle.importKey('pkcs8', b64ToBuf(privateKeyB64), ALGO, false, ['sign']);
   const sig = await crypto.subtle.sign(SIGN, key, new TextEncoder().encode(payload));
