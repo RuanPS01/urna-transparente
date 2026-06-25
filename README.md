@@ -17,6 +17,7 @@ Destaque para a corrida **presidencial**, com apoio a outros cargos (Governador,
 - **Rodadas mensais** — identificadas por `AAAA-MM`, apuradas separadamente a partir da própria corrente.
 - **Verificação aberta** — explorador da blockchain revalida a corrente inteira; a apuração é recontada dos blocos, sem placar paralelo.
 - **Zero dependências de front-end** — SPA em JavaScript puro (sem build). Backend usa apenas Express.
+- **Funciona no GitHub Pages** — modo híbrido: com servidor Node usa a API; sem servidor (Pages), a blockchain inteira roda no navegador (`localStorage`).
 
 ## 🧱 Como um voto vira uma "argola"
 
@@ -113,9 +114,38 @@ urna-transparente/
 ├── public/                   # Front-end (SPA)
 │   ├── index.html
 │   ├── css/styles.css
+│   ├── data/candidates.json  # Cópia do seed (usada no modo estático)
 │   └── js/                   # app, api, wallet, identity, ui, views/
+│       └── local-backend.js  # Blockchain no navegador (modo GitHub Pages)
+├── .github/workflows/        # CI (testes) e deploy do GitHub Pages
 └── test/blockchain.test.js   # Testes automatizados
 ```
+
+## 🤖 Integração contínua (CI)
+
+O workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda `npm ci` e
+`npm test` a cada push e pull request, garantindo que a blockchain continua íntegra.
+
+## 🌐 Implantação no GitHub Pages
+
+O GitHub Pages serve apenas conteúdo estático — e a Urna Transparente foi
+preparada para isso. Sem um backend Node, o front-end detecta a ausência da API
+e passa a rodar a **blockchain inteiramente no navegador** (mineração, assinatura,
+apuração e persistência em `localStorage`). Um aviso de "modo demonstração" é
+exibido nesse caso.
+
+> No modo Pages, cada navegador tem a sua própria corrente local (não há um
+> placar global compartilhado). Para uma corrente única e compartilhada, rode o
+> servidor Node (`npm start`) ou hospede o backend separadamente.
+
+O deploy é automático via [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
+Para ativar (uma única vez):
+
+1. No GitHub, vá em **Settings → Pages** e em **Build and deployment → Source**
+   selecione **GitHub Actions**.
+2. Faça merge desta branch na `main` (ou rode o workflow manualmente em
+   **Actions → Deploy GitHub Pages → Run workflow**).
+3. O site ficará disponível em `https://<usuário>.github.io/urna-transparente/`.
 
 ## 🔐 Segurança e limitações (é uma demonstração!)
 

@@ -1,0 +1,52 @@
+name: Deploy GitHub Pages
+
+# Publica o front-end estático (pasta public/) no GitHub Pages.
+# No Pages não há backend Node: a blockchain roda no navegador
+# (public/js/local-backend.js).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante uma publicação por vez.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Monta o site estático
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sincroniza candidatos (seed -> site estático)
+        run: |
+          mkdir -p public/data
+          cp server/data/candidates.seed.json public/data/candidates.json
+
+      - name: Configura Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empacota a pasta public/
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    name: Publica
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

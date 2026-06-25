@@ -68,6 +68,14 @@ button { font-family: inherit; cursor: pointer; }
 .wallet-chip.none .dot { background: var(--txt-fraco); box-shadow: none; }
 .wallet-chip button { background: none; border: none; color: var(--txt-suave); font-size: 1rem; line-height: 1; }
 
+.mode-banner {
+  background: linear-gradient(90deg, rgba(255, 223, 0, 0.14), rgba(0, 155, 58, 0.12));
+  border-bottom: 1px solid var(--linha);
+  color: #f0e6b8; font-size: .88rem; text-align: center;
+  padding: 9px 18px;
+}
+.mode-banner strong { color: var(--amarelo); }
+
 /* ---------------- Layout ---------------- */
 .app { flex: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: 28px 20px 60px; }
 .section-title { font-size: 1.5rem; margin-bottom: 4px; }

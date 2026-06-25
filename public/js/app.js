@@ -2,6 +2,7 @@
 import { getWallet, clearWallet } from './wallet.js';
 import { openIdentityModal } from './identity.js';
 import { escapeHtml, toast } from './ui.js';
+import { getMode } from './api.js';
 
 import * as home from './views/home.js';
 import * as votar from './views/votar.js';
@@ -69,10 +70,20 @@ function setupNavToggle() {
   };
 }
 
+async function showModeBanner() {
+  try {
+    if ((await getMode()) !== 'static') return;
+    const el = document.getElementById('mode-banner');
+    el.hidden = false;
+    el.innerHTML = '🔗 <strong>Modo demonstração</strong> — sem servidor: a blockchain roda localmente no seu navegador (os votos ficam neste dispositivo).';
+  } catch { /* ignora */ }
+}
+
 window.addEventListener('hashchange', route);
 window.addEventListener('wallet-changed', renderWalletBadge);
 window.addEventListener('DOMContentLoaded', () => {
   setupNavToggle();
   renderWalletBadge();
+  showModeBanner();
   route();
 });
